@@ -1,6 +1,6 @@
 ﻿# AddDemographicLayers-widget-js (OEI)
 
-## Description
+## Updates
 April 4, 2016
 Updated widget for HTTPS compatibility and latest WAB version
 
