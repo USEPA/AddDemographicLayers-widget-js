@@ -2,7 +2,7 @@ define(
 [],
 function() {
  var _config = {"demogJSON": {
-    "ejdemog": { "title": "2008-2012 ACS", "tiptext": "2008-2012 ACS", "type": "agsdemog", "layerurl": "http://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2012acs", "lookupindex": 4,
+    "ejdemog": { "title": "2008-2012 ACS", "tiptext": "2008-2012 ACS", "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2012acs", "lookupindex": 4,
         "description": "2008-2012 ACS demographics are a set of variables derived based on a subset of 2008-2012 American Community Survey data.",
         "process": false,"transparency": "0.8", "defaultCategoryIndex": 8,
         "baselayers": {
@@ -14,7 +14,7 @@ function() {
         "dynamiclayers": {}
     }
 
-    , "census2010": { "title": "2010 Census", "tiptext": "2010 ACS", "type": "agsdemog", "layerurl": "http://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2010sf1", "lookupindex": 5,
+    , "census2010": { "title": "2010 Census", "tiptext": "2010 ACS", "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2010sf1", "lookupindex": 5,
         "description": "2010 Census contains a set of variables derived based on a subset of 2010 Census data.",
         "process": false, "transparency": "0.8", "defaultCategoryIndex": 3,
         "baselayers": {
@@ -26,7 +26,7 @@ function() {
         },
         "dynamiclayers": {}
     }
-    , "census2k": { "title": "2000 Census", "tiptext": "2000 SF3", "type": "agsdemog", "layerurl": "http://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2000sf3", "lookupindex": 4,
+    , "census2k": { "title": "2000 Census", "tiptext": "2000 SF3", "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2000sf3", "lookupindex": 4,
         "description": "2000 Census contains a set of variables derived based on a subset of 2000 Census data.",
         "process": false, "transparency": "0.8", "defaultCategoryIndex": 6,
         "baselayers": {
