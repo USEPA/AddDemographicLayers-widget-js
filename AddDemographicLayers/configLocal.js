@@ -2,14 +2,14 @@ define(
 [],
 function() {
  var _config = {"demogJSON": {
-    "ejdemog": { "title": "2008-2012 ACS", "tiptext": "2008-2012 ACS", "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2012acs", "lookupindex": 4,
-        "description": "2008-2012 ACS demographics are a set of variables derived based on a subset of 2008-2012 American Community Survey data.",
+    "ejdemog": { "title": "2011-2015 ACS", "tiptext": "2011-2015 ACS", "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2015acs", "lookupindex": 4,
+        "description": "2011-2015 ACS demographics are a set of variables derived based on a subset of 2011-2015 American Community Survey data.",
         "process": false,"transparency": "0.8", "defaultCategoryIndex": 8,
         "baselayers": {
-            "bg": { "minlevel": 10, "maxlevel": 20, "layeridx": 0, "level": "2008-2012 ACS (Blockgroup)" }
-        , "tr": { "minlevel": 8, "maxlevel": 10, "layeridx": 1, "level": "2008-2012 ACS (Tract)" }
-        , "cnty": { "minlevel": 4, "maxlevel": 8, "layeridx": 2, "level": "2008-2012 ACS (County)" }
-        , "st": { "minlevel": 0, "maxlevel": 4, "layeridx": 3, "level": "2008-2012 ACS (State)" }
+            "bg": { "minlevel": 10, "maxlevel": 20, "layeridx": 0, "level": "2011-2015 ACS (Blockgroup)" }
+        , "tr": { "minlevel": 8, "maxlevel": 10, "layeridx": 1, "level": "2011-2015 ACS (Tract)" }
+        , "cnty": { "minlevel": 4, "maxlevel": 8, "layeridx": 2, "level": "2011-2015 ACS (County)" }
+        , "st": { "minlevel": 0, "maxlevel": 4, "layeridx": 3, "level": "2011-2015 ACS (State)" }
     },
         "dynamiclayers": {}
     }
