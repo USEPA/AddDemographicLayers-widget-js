@@ -3,6 +3,7 @@
 ## Updates
 
 August 29, 2017 Updated to work with 2011-2015 ACS that’s available in the latest EJSCREEN 2017.
+
 April 4, 2016 Updated widget for HTTPS compatibility and latest WAB version
 
 ## Description
