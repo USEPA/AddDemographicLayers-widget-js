@@ -1,14 +1,14 @@
 ﻿# AddDemographicLayers-widget-js (OEI)
 
 ## Updates
-July 25, 2017 Updated to work with EnviroAtlas.
+July 25, 2018 Updated to work with EPA EnviroAtlas.
 
 August 29, 2017 Updated to work with 2011-2015 ACS that’s available in the latest EJSCREEN 2017.
 
 April 4, 2016 Updated widget for HTTPS compatibility and latest WAB version
 
 ## Description
-This is a widget developed for Esri’s Web AppBuilder (WAB) to map the Census demographic layers. It allows mapping a Census demographic layer in the same way as used in EPA’s [EJSCREEN](http://www2.epa.gov/ejscreen) application. 
+This is a widget developed for Esri’s Web AppBuilder (WAB) to map the Census demographic layers. It allows mapping a Census demographic layer as thematic map or graduated symbol map, which is in the same way as used in EPA’s [EJSCREEN](http://www2.epa.gov/ejscreen) application. 
 Layers for multiple demographic variables can be added from one of 3 Census data sets: 
 - 2011-2015 ACS
 - 2010 Census
