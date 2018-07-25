@@ -1,6 +1,7 @@
 ﻿# AddDemographicLayers-widget-js (OEI)
 
 ## Updates
+July 25, 2017 Updated to work with EnviroAtlas.
 
 August 29, 2017 Updated to work with 2011-2015 ACS that’s available in the latest EJSCREEN 2017.
 
