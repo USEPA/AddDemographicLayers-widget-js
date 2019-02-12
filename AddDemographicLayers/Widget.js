@@ -1,6 +1,6 @@
 define(['dojo/_base/declare', 
     'jimu/BaseWidget',
-    'jimu/loaderplugins/jquery-loader!widgets/AddDemographicLayers/jquery.min.js', //SAIC note: this line needs to be commented out for EnviroAtlas since it will conflict with the existing juery.
+    /*'jimu/loaderplugins/jquery-loader!widgets/DemographicLayers/jquery.min.js',*/ //SAIC note: this line needs to be commented out for EnviroAtlas since it will conflict with the existing juery.
     "dijit/_Widget",
     'dijit/_WidgetsInTemplateMixin',
   "dijit/_Templated",
@@ -8,6 +8,7 @@ define(['dojo/_base/declare',
   'dojo/on',
   "esri/Color",
     'dijit/form/Slider',
+    'dijit/Dialog',
   "esri/renderers/ClassBreaksRenderer",
         "esri/symbols/SimpleFillSymbol",
         "esri/symbols/SimpleMarkerSymbol",
@@ -35,6 +36,7 @@ function(declare,
     on,
     Color,
     Slider,
+    Dialog,
     ClassBreaksRenderer, 
     SimpleFillSymbol, 
     SimpleMarkerSymbol,
@@ -55,10 +57,10 @@ function(declare,
   return declare([BaseWidget,_WidgetsInTemplateMixin], {
     // Custom widget code goes here 
 	
-    baseClass: 'jimu-widget-AddDemographics',
+    baseClass: 'jimu-widget-DemographicLayers',
     
     //this property is set by the framework when widget is loaded.
-     name: 'AddDemographics',
+     name: 'DemographicLayers',
      
      /*colorThemes:
      [{"startcolor": "#eaf0fd", "endcolor": "#03519e"},
@@ -115,6 +117,70 @@ startup: function () {
     this.dtype = "ejdemog";
     this.rendertype = "polygon";
     this.inherited(arguments);
+
+    document.getElementById('censusServiceSelectionHelp').onclick = function (e) {
+        var infobox = new Dialog({
+                            title: "Data Source",
+                            style: 'width: 300px'
+                        });
+
+        infotext = "<h2 style='margin-top:0px'>2012-2016 ACS</h2>";
+        infotext += "<p>Variables derived from a subset of 2012-2016 American Community Survey data.</p>"
+        infotext += "<hr style='margin-top:10px'>";
+        infotext += "<h2 style='margin-top:0px'>2010 Census</h2>";
+        infotext += "<p>Variables derived from a subset of 2010 Census data.</p>";
+        infotext += "<hr style='margin-top:10px'>";
+        infotext += "<h2 style='margin-top:0px'>2000 Census</h2>";
+        infotext += "<p>Variables derived from a subset of 2000 Census data.</p>";
+
+        var infoDiv = dojo.create('div', {
+                        'innerHTML': infotext
+                        }, infobox.containerNode);
+                        infobox.show()
+    };
+
+    document.getElementById('breaksSelectionHelp').onclick = function (e) {
+        var infobox = new Dialog({
+                            title: "Break Type",
+                            style: 'width: 300px'
+                        });
+
+        infotext = "<h2 style='margin-top:0px'>Quantile</h2>";
+        infotext += "<p>Each class contains an equal number of features. A quantile classification is well suited to linearly distributed data. Quantile assigns the same number of data values to each class. There are no empty classes or classes with too few or too many values.</p>";
+        infotext += "<hr style='margin-top:10px'>";
+        infotext += "<h2 style='margin-top:0px'>Natural Breaks</h2>";
+        infotext += "<p>Natural breaks classes are based on natural groupings inherent in the data. Class breaks are identified that best group similar values and that maximize the differences between classes. </p>";
+        infotext += "<hr style='margin-top:10px'>";
+        infotext += "<h2 style='margin-top:0px'>Equal Interval</h2>";
+        infotext += "<p>Equal interval divides the range of attribute values into equal-sized subranges This method emphasizes the amount of an attribute value relative to other values. Equal interval is best applied to familiar data ranges, such as percentages and temperature.</p>";
+        infotext += "<br>"
+        infotext += "<p style='font-size:9px'>Source: <a href='http://pro.arcgis.com/en/pro-app/help/mapping/layer-properties/data-classification-methods.htm' target='_blank'>ESRI</a></p>";
+
+        var infoDiv = dojo.create('div', {
+                        'innerHTML': infotext
+                        }, infobox.containerNode);
+                        infobox.show()
+    };
+
+    document.getElementById('mapStyleSelectionHelp').onclick = function (e) {
+        var infobox = new Dialog({
+                            title: "Map Style",
+                            style: 'width: 300px'
+                        });
+
+        infotext = "<h2 style='margin-top:0px'>Choropleth Map</h2>";
+        infotext += "<p>Choropleth maps use different colors or patterns to represent data (e.g., households below poverty) for different geographies (e.g., county, census tract). These maps are useful for identifying spatial patterns or hotspots.</p>";
+        infotext += "<div><img style='height:120px; margin-top:5px' src='widgets/DemographicLayers/images/thematic.png'></div><br>";
+        infotext += "<hr style='margin-top:10px'>";
+        infotext += "<h2 style='margin-top:0px'>Graduated Symbol Map</h2>";
+        infotext += "<p>Graduated symbol maps use variable size symbols (e.g., circles) to represent discrete changes in data. These maps are useful when added over other thematic maps or basemaps.</p>";
+        infotext += "<div><img style='height:120px; margin-top:5px' src='widgets/DemographicLayers/images/graduated.png'></div><br>";
+        
+        var infoDiv = dojo.create('div', {
+                        'innerHTML': infotext
+                        }, infobox.containerNode);
+                        infobox.show()
+    };
   
 
 },
@@ -160,7 +226,8 @@ createCategory: function (key) {
     var wobj = this;
     wobj.dtype = key;
     var dgObj = _config.demogJSON[key];
-    this.descdiv.innerHTML = dgObj.description;       
+    
+          
 
     if (dgObj.process) {
         wobj.createCatList(key);
@@ -177,7 +244,12 @@ createCategory: function (key) {
         query.outFields = ["*"];
         var dirty = (new Date()).getTime();
         query.where = "1=1 AND " + dirty + "=" + dirty;
-
+        if (dgObj.hasOwnProperty('CategoryExcluded')){
+            categoryExcluded = dgObj.CategoryExcluded;
+            for (var indexCategory = 0; indexCategory < categoryExcluded.length; indexCategory++) {
+                query.where = query.where + " AND CATEGORY<>" + "'" + categoryExcluded[indexCategory] + "'";
+            }                
+        }
         //get features in order by cat and label
         query.orderByFields = ["CATEGORY", "DESCRIPTION"];
 
@@ -262,6 +334,7 @@ createCategory: function (key) {
 
             }
             wobj.addBtn.disabled = false;
+
         }, function (error) {
             console.log(error);
         });
@@ -818,30 +891,22 @@ ArrayContains: function (element, inArray) {
     return false;
 },
 generateColors: function(steps, scolor, ecolor) {
-    var newcolors = [];
-    var c1 = new Color(scolor);
-    var c2 = new Color(ecolor);
-    var deltaR = Math.floor((c2.r - c1.r)/(steps-1));
-    var deltaG = Math.floor((c2.g - c1.g)/(steps-1));
-    var deltaB = Math.floor((c2.b - c1.b)/(steps-1));
-
-    
-    
-    //newcolors.push(c1);
-    
-    for (i = 0; i < steps; i++) {
-        var r = c1.r + deltaR * i;
-        var g = c1.g + deltaG * i;
-        var b = c1.b + deltaB * i;
+    var stepFactor = 1 / (steps - 1);
+        var newcolors = [];
+        var c1 = new Color(scolor);
+        var c2 = new Color(ecolor);
+        for (i = 0; i < steps; i++) {
+            var factor = stepFactor * i;
+            var r = Math.round(c1.r + factor * (c2.r - c1.r));
+            var g = Math.round(c1.g + factor * (c2.g - c1.g));
+            var b = Math.round(c1.b + factor * (c2.b - c1.b));
+            var curcolor = new Color([r,g,b]);
+            //var curcolor = this.rgb2hex(r,g,b);
+            newcolors.push(curcolor);
+            
+        }
         
-        var curcolor = new Color([r,g,b]);
-        //var curcolor = this.rgb2hex(r,g,b);
-        newcolors.push(curcolor);
-        
-    }
-    //newcolors.push(c2);
-    
-    return newcolors;
+        return newcolors;
 },
 rgb2hex: function (red, green, blue) {
     var rgb = blue | (green << 8) | (red << 16);
@@ -850,7 +915,7 @@ rgb2hex: function (red, green, blue) {
 tablePalette: function(count, scolor, ecolor) {
 
 var pctvalue = 100 / (count + 1);
-var divwidth = 12 * (count + 1);
+var divwidth = 32* (count + 1);
 var c1 = new Color(scolor);
 var c2 = new Color(ecolor);
 var deltaR = Math.floor((c2.r - c1.r)/count);
@@ -974,7 +1039,7 @@ clearhighlight:function(dobj) {
 dobj.style.backgroundColor = "transparent";
 },
 destroy: function () {
-    this._zoomHandler.remove();
+    //this._zoomHandler.remove();
     dojo.empty(this.domNode);
     this.inherited(arguments);
 }
